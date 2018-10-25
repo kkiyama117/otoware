@@ -1,8 +1,10 @@
-#coding:utf-8
 import wave
 import pyaudio
 import struct
-from pylab import *
+
+from matplotlib.pyplot import subplot, plot, xlabel, ylabel, ylim, show
+from numpy.ma import frombuffer
+
 
 def play(data, fs, bit):
     p = pyaudio.PyAudio()
@@ -13,14 +15,15 @@ def play(data, fs, bit):
     # 再生
     chunk = 1024
     sp = 0
-    buffer = data[sp:sp+chunk]
+    buffer = data[sp:sp + chunk]
     while stream.is_active():
         stream.write(buffer)
         sp += chunk
-        buffer = data[sp:sp+chunk]
+        buffer = data[sp:sp + chunk]
         if buffer == '': stream.stop_stream()
     stream.close()
     p.terminate()
+
 
 def distortion(data, gain, level):
     length = len(data)
@@ -36,6 +39,7 @@ def distortion(data, gain, level):
         newdata[n] *= level
     return newdata
 
+
 def save(data, fs, bit, filename):
     """波形データをWAVEファイルへ出力"""
     wf = wave.open(filename, "w")
@@ -44,6 +48,7 @@ def save(data, fs, bit, filename):
     wf.setframerate(fs)
     wf.writeframes(data)
     wf.close()
+
 
 def main():
     # 音声をロード
@@ -85,3 +90,7 @@ def main():
     save(newdata, fs, 16, "distortion.wav")
 
     show()
+
+
+if __name__ == '__main__':
+    main()

@@ -8,6 +8,7 @@ with open(os.path.join(here, 'README.md')) as f:
 
 requires = [
     'pyaudio',
+    'numpy',
     'matplotlib'
 ]
 
@@ -34,8 +35,9 @@ setup(name='otoware',
           'testing': tests_require,
       },
       install_requires=requires,
-      entry_points="""\
-      [paste.app_factory]
-      main = src.main:main
-      """,
+      entry_points={
+          'console_scripts': [
+              'otoware = src.main:main',
+          ],
+      },
       )
