@@ -7,10 +7,8 @@ with open(os.path.join(here, 'README.md')) as f:
     README = f.read()
 
 requires = [
-    'wave',
     'pyaudio',
-    'struct',
-    'pylab'
+    'matplotlib'
 ]
 
 tests_require = [
