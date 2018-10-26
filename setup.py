@@ -37,7 +37,7 @@ setup(name='otoware',
       install_requires=requires,
       entry_points={
           'console_scripts': [
-              'otoware = src.main:main',
+              'otowari = src.main:main',
           ],
       },
       )

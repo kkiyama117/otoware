@@ -4,7 +4,7 @@ otoware 手伝い
 # install
 1. First, install portaudio
 
-`sudo pacman -S portaudio`
+`sudo pacman -S portaudio tk`
 `sudo apt-get install portaudio`
 
 2. Next, install with pip
