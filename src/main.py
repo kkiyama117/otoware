@@ -14,6 +14,7 @@ def get_data_file_path(filename):
 
 
 def main():
+    # arg parse する
     origin_file = "origin.wav"
     result_file = "distortion.wav"
 

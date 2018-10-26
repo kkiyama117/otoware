@@ -7,7 +7,6 @@ with open(os.path.join(here, 'README.md')) as f:
     README = f.read()
 
 requires = [
-    'pyaudio',
     'numpy',
     'matplotlib'
 ]
