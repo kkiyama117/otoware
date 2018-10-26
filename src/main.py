@@ -16,7 +16,7 @@ def get_data_file_path(filename):
 def main():
     # arg parse する
     origin_file = "origin.wav"
-    result_file = "distortion.wav"
+    result_file = "dist_" + origin_file
 
     otowari(str(get_data_file_path(origin_file)),
             str(get_data_file_path(result_file)))
