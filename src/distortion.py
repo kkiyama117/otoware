@@ -40,7 +40,7 @@ def save(data, fs, bit, filename):
     wf.close()
 
 
-def otowari(origin_file, result_file):
+def create_distortion_file(origin_file, result_file):
     origin_path = str(Path(origin_file).resolve())
     result_path = str(Path(result_file).resolve())
     # 音声をロード
