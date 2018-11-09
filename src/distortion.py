@@ -30,10 +30,10 @@ def distortion(data, gain, level):
     return newdata
 
 
-def save(data, fs, bit, filename):
+def save(data, channel, fs, bit, result_name):
     """波形データをWAVEファイルへ出力"""
-    wf = wave.open(filename, "w")
-    wf.setnchannels(1)
+    wf = wave.open(result_name, "w")
+    wf.setnchannels(channel)
     wf.setsampwidth(bit // 8)
     wf.setframerate(fs)
     wf.writeframes(data)
@@ -49,6 +49,7 @@ def create_distortion_file(origin_file, result_file):
     # 音声データの取得
     fs = wf.getframerate()
     length = wf.getnframes()
+    channel = wf.getnchannels()
     data = wf.readframes(length)
 
     # エフェクトをかけやすいようにバイナリデータを[-1, +1]に正規化
@@ -62,4 +63,7 @@ def create_distortion_file(origin_file, result_file):
     new_data = struct.pack("h" * len(new_data), *new_data)
 
     # サウンドエフェクトをかけた音声を保存
-    save(new_data, fs, 16, result_path)
+    save(new_data, channel, fs, 16, result_path)
+    # 結果
+    wf2 = wave.open(result_path)
+    print_wave_info(wf)
