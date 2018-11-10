@@ -12,7 +12,7 @@ def otowari(file_name):
     origin_path = get_data_file_path(file_name)
     result_file = "dist_" + origin_path.name
     result_path = get_data_file_path(result_file)
-    create_distortion_file(origin_path, result_path)
+    create_distortion_file(origin_path, result_path, gain=20)
 
 
 if __name__ == '__main__':
