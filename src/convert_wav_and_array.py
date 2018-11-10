@@ -4,7 +4,7 @@ from pathlib import Path
 
 def ndarray_to_wav(data, channel: int, fs: int, result_path: Path):
     """波形データをWAVEファイルへ出力"""
-    with result_path.open("w") as f, wave.open(f, "w") as wf:
+    with result_path.open("wb") as f, wave.open(f, "w") as wf:
         wf.setnchannels(channel)
         # 16bit // 2 で サンプルサイズは2(らしい)
         wf.setsampwidth(2)
@@ -16,7 +16,7 @@ def ndarray_to_wav(data, channel: int, fs: int, result_path: Path):
 
 def _print_wave_info(path: Path):
     """WAVEファイルの情報を取得"""
-    with path.open() as f, wave.open(f) as wf:
+    with path.open("rb") as f, wave.open(f) as wf:
         print("チャンネル数:", wf.getnchannels())
         print("サンプル幅:", wf.getsampwidth())
         print("サンプリング周波数:", wf.getframerate())
