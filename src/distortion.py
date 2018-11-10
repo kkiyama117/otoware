@@ -3,6 +3,7 @@ import wave
 from pathlib import Path
 
 from numpy.ma import frombuffer
+import numpy as np
 
 from src.convert_wav_and_array import ndarray_to_wav
 
@@ -27,7 +28,7 @@ def create_distortion_file(origin_path: Path, result_path: Path):
     data = frombuffer(data, dtype="int16") / 32768.0
 
     # ここでサウンドエフェクト
-    new_data = distortion(data, 200, 0.3)
+    new_data = distortion(data, 5, 0.3)
     # new_data = data
 
     # 正規化前のバイナリデータに戻す(32768倍)
@@ -40,15 +41,23 @@ def create_distortion_file(origin_path: Path, result_path: Path):
 
 
 def distortion(data, gain, level):
+    """gain乗の値をもちいてdistortion
+    data: numpy.ndarray
+    gain: 増幅の倍率
+    level: 音量
+    """
     length = len(data)
-    newdata = [0.0] * length
+    new_data = [0.0] * length
     for n in range(length):
-        newdata[n] = data[n] * gain  # 増幅
+        # 単純に増幅する時は以下
+        # newdata[n] = data[n] * gain
+        # https://qiita.com/stringamp/items/4b6e344ddf878f5099c7#122-%E5%AE%9F%E8%A3%85
+        new_data[n] = np.sign(data[n]) * (1 - np.exp(-5 * np.abs(data[n])))
         # クリッピング
-        if newdata[n] > 1.0:
-            newdata[n] = 1.0
-        elif newdata[n] < -1.0:
-            newdata[n] = -1.0
+        if new_data[n] > 1.0:
+            new_data[n] = 1.0
+        elif new_data[n] < -1.0:
+            new_data[n] = -1.0
         # 音量を調整
-        newdata[n] *= level
-    return newdata
+        new_data[n] *= level
+    return new_data
