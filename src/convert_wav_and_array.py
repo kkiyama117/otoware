@@ -18,13 +18,13 @@ def ndarray_to_wav(data, channel: int, fs: int, result_path: Path):
         print("data completely saved")
     finally:
         print("save func finished")
-        _print_wave_info(result_path)
+        # _print_wave_info(result_path)
 
 
 def _print_wave_info(file: Path):
     """WAVEファイルの情報を取得"""
     try:
-        wf = wave.open(Path)
+        wf = wave.open(Path,"r")
     except IOError:
         print(f"can't get info for {file.name}")
     else:
