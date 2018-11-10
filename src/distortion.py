@@ -4,15 +4,38 @@ from pathlib import Path
 
 from numpy.ma import frombuffer
 
+from src.convert_wav_and_array import ndarray_to_wav
 
-def print_wave_info(wf):
-    """WAVEファイルの情報を取得"""
-    print("チャンネル数:", wf.getnchannels())
-    print("サンプル幅:", wf.getsampwidth())
-    print("サンプリング周波数:", wf.getframerate())
-    print("フレーム数:", wf.getnframes())
-    print("パラメータ:", wf.getparams())
-    print("長さ（秒）:", float(wf.getnframes()) / wf.getframerate())
+
+def wav_to_ndarray():
+    pass
+
+
+def create_distortion_file(origin_path, result_path):
+    # 音声をロード
+    wf = wave.open(origin_path)
+    # 音声データの取得
+    frame_rate = wf.getframerate()
+    length = wf.getnframes()
+    channel = wf.getnchannels()
+    data = wf.readframes(length)
+
+    # エフェクトをかけやすいようにバイナリデータを[-1, +1]に正規化
+    # wav -> numpy ndArray
+    # int16 の絶対値は 32767
+    data = frombuffer(data, dtype="int16") / 32768.0
+
+    # ここでサウンドエフェクト
+    new_data = distortion(data, 200, 0.3)
+    # new_data = data
+
+    # 正規化前のバイナリデータに戻す(32768倍)
+    new_data = [int(x * 32767.0) for x in new_data]
+    new_data = struct.pack("h" * len(new_data), *new_data)
+
+    # 音声を保存
+    ndarray_to_wav(new_data, channel, frame_rate, result_path)
+    wf.close()
 
 
 def distortion(data, gain, level):
@@ -28,42 +51,3 @@ def distortion(data, gain, level):
         # 音量を調整
         newdata[n] *= level
     return newdata
-
-
-def save(data, channel, fs, bit, result_name):
-    """波形データをWAVEファイルへ出力"""
-    wf = wave.open(result_name, "w")
-    wf.setnchannels(channel)
-    wf.setsampwidth(bit // 8)
-    wf.setframerate(fs)
-    wf.writeframes(data)
-    wf.close()
-
-
-def create_distortion_file(origin_file, result_file):
-    origin_path = str(Path(origin_file).resolve())
-    result_path = str(Path(result_file).resolve())
-    # 音声をロード
-    wf = wave.open(origin_path)
-    print_wave_info(wf)
-    # 音声データの取得
-    fs = wf.getframerate()
-    length = wf.getnframes()
-    channel = wf.getnchannels()
-    data = wf.readframes(length)
-
-    # エフェクトをかけやすいようにバイナリデータを[-1, +1]に正規化
-    data = frombuffer(data, dtype="int16") / 32768.0
-
-    # ここでサウンドエフェクト
-    new_data = distortion(data, 200, 0.3)
-
-    # 正規化前のバイナリデータに戻す
-    new_data = [int(x * 32767.0) for x in new_data]
-    new_data = struct.pack("h" * len(new_data), *new_data)
-
-    # サウンドエフェクトをかけた音声を保存
-    save(new_data, channel, fs, 16, result_path)
-    # 結果
-    wf2 = wave.open(result_path)
-    print_wave_info(wf)
