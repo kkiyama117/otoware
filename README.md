@@ -16,3 +16,9 @@ otoware 手伝い
 `python setup.py sdist`
 
 4. run
+`otowari`
+
+data/origin.wav がdist_origin.wav になります
+
+# TODO
+ファイル名と音割れの度合いの変数を外部から与えられるようにする
