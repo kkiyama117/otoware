@@ -13,7 +13,7 @@ def wav_to_ndarray():
 
 def create_distortion_file(origin_path: Path, result_path: Path):
     # 音声をロード
-    wf = wave.open(origin_path, "rb")
+    wf = wave.open(origin_path.open("rb"))
     print(origin_path)
     # 音声データの取得
     frame_rate = wf.getframerate()
