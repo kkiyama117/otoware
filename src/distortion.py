@@ -11,6 +11,13 @@ def create_distortion_file(origin_path: Path, result_path: Path, gain):
     save_file(new_data, origin_path, result_path)
 
 
+def play_distortion_file(origin_path: Path, gain):
+    # distortion nd_array
+    new_data = distortion_array(origin_path, gain)
+    # 音声を保存
+    play_file(new_data, origin_path)
+
+
 def play_file(new_data, origin_path):
     # 音声を保存
     wav_info = cwa.get_wave_info(origin_path)
@@ -18,13 +25,6 @@ def play_file(new_data, origin_path):
     width = wav_info['width']
     frame_rate = wav_info['frame_rate']
     cwa.ndarray_to_device(new_data, channel, width, frame_rate)
-
-
-def play_distortion_file(origin_path: Path, gain):
-    # distortion nd_array
-    new_data = distortion_array(origin_path, gain)
-    # 音声を保存
-    play_file(new_data, origin_path)
 
 
 # origin_path の　ファイルに対して, distortion した　arrayを返す
