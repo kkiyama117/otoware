@@ -58,7 +58,27 @@ def ndarray_to_device(data: bytes, channel: int, width, rate):
     p.terminate()
 
 
+# byte列を(本来のwavのデータの情報を元に再生)
+def play_file(new_data, origin_path):
+    wav_info = get_wave_info(origin_path)
+    channel = wav_info['channel']
+    width = wav_info['width']
+    frame_rate = wav_info['frame_rate']
+    # numpyのndarrayをデバイスのデフォルトの再生機器に送信
+    cwa.ndarray_to_device(new_data, channel, width, frame_rate)
+
+
 """保存用関数群"""
+
+
+# array をwav に変換して保存
+def save_file(bit_array, origin_path: Path, result_path: Path):
+    # 音声を保存
+    wav_info = get_wave_info(origin_path)
+    frame_rate = wav_info['frame_rate']
+    channel = wav_info['channel']
+    ndarray_to_wav(bit_array, channel=channel, rate=frame_rate,
+                   path=result_path)
 
 
 def ndarray_to_wav(data: bytes, channel: int, rate: int, path: Path):
