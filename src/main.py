@@ -20,9 +20,9 @@ def play_otowari(file_name, distortion_level=20):
     origin_path = get_data_file_path(file_name)
     result_file = "dist_" + origin_path.name
     result_path = get_data_file_path(result_file)
-    create_distortion_file(origin_path, result_path,
-                           gain=distortion_level * 1.3)
-    # play_distortion_file(origin_path, gain=int(distortion_level * 1.3))
+    # create_distortion_file(origin_path, result_path,
+    #                        gain=distortion_level * 1.3)
+    play_distortion_file(origin_path, gain=int(distortion_level * 1.3))
 
 
 if __name__ == '__main__':

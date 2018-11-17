@@ -49,7 +49,7 @@ def ndarray_to_device(data: bytes, channel: int, width, rate):
     pos = 0  # byte count
     while pos < size:
         # frame_size
-        frame_size = stream.get_write_available() * 2
+        frame_size = 1024
         o = data[pos:pos + frame_size]
         stream.write(o)
         pos += frame_size
