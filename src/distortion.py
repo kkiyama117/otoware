@@ -1,22 +1,28 @@
 from pathlib import Path
 import numpy as np
-from src import convert_wav_and_array as cwa
+from src import convert_wav_and_array as cwa, utils
+
 
 class DistortionWavAndArray(cwa.WavAndArray):
-    pass
+    def __init__(self, origin_path: Path, result_path: Path = None,
+                 distortion_level=20):
+        super(DistortionWavAndArray, self).__init__(origin_path)
+        self._dist_level = distortion_level
 
+    def bytes_data_generator(self):
+        # 正規化
+        self._data = utils.normalization(self._data)
+        frame_per_buffer = 1024
+        position = 0
+        size = len(self._data)
+        while position < size:
+            yield utils.de_normalization(distortion(
+                self._data[position:position + frame_per_buffer],
+                self._dist_level))
+            position += frame_per_buffer
 
-# origin_path の　wavに対して, distortion した　arrayを返す
-# リアルタイム処理の時は多分これでは駄目
-def distortion_array(origin_path, gain=5):
-    # 音声をロード→正規化→エフェクト→逆正規化
-    return cwa.de_normalization(
-        distortion(cwa.normalization(cwa.wav_to_ndarray(origin_path)), gain))
-
-
-def realtime_distortion_array(origin_path, gain=5):
-    data = cwa.wav_to_ndarray(origin_path)
-    data_array = cwa.normalization(data)
+    def update(self, distortion_level=20):
+        self._dist_level = distortion_level
 
 
 # byteもしくはbyte列に対して distortion の処理をして送る
@@ -37,12 +43,3 @@ def distortion(data, gain, level=0.7, clip=True):
     # 音量を調整
     new_data *= level
     return new_data
-
-
-# deprecated
-# 今回は保存しないので使わない
-def create_distortion_file(origin_path: Path, result_path: Path, gain):
-    # distortion nd_array
-    new_data = distortion_array(origin_path, gain)
-    # 音声を保存
-    cwa.save_file(new_data, origin_path, result_path)
