@@ -5,14 +5,8 @@ from src.utils import get_data_file_path
 
 
 def main():
-    # arg parse する
-    parser = argparse.ArgumentParser(description='Process some integers.')
-    parser.add_argument("otowari_level", help="input number",
-                        type=int)
     # 取得した引数
-    args = parser.parse_args()
-    otowari_level = args.otowari_level
-    print("input:", otowari_level)
+    otowari_level = 1024
     origin_file = "origin.wav"
     play_otowari(origin_file, otowari_level)
 
