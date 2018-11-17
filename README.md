@@ -4,7 +4,9 @@ otoware 手伝い
 # install
 1. First, install portaudio
 
+- arch linux
 `sudo pacman -S portaudio tk`
+- ubuntu or devian
 `sudo apt-get install portaudio`
 
 2. Next, install with pip
