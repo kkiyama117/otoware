@@ -53,18 +53,19 @@ class WavAndArray:
             channels=self._wav_info['channel'],
             rate=self._wav_info['frame_rate'],
             output=True)
-        # 
-        size = len(self._data)
-        pos = 0  # byte count
-        while pos < size:
-            # frame_size
-            frame_size = 1024
-            o = self._data[pos:pos + frame_size]
-            stream.write(o)
-            pos += frame_size
-        # time.sleep(float(size) / 2 / rate)
+        for  byte_data in self.bytes_data_generator():
+            stream.write(byte_data)
         stream.close()
         p.terminate()
+
+    # byte列の末端になるまで再生
+    def bytes_data_generator(self):
+        frame_per_buffer = 1024
+        position = 0
+        size = len(self._data)
+        while position < size:
+            yield self._data[position:position + frame_per_buffer]
+            position += frame_per_buffer
 
 # """保存用関数群"""
 #
