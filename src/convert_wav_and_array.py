@@ -17,7 +17,6 @@ class WavAndArray:
         print(self._wav_info)
 
     # 初期化関数群
-
     def get_wave_info(self):
         """WAVEファイルの情報を取得"""
         with self._path.open("rb") as f, wave.open(f) as wf:
@@ -31,6 +30,30 @@ class WavAndArray:
         with self._path.open("rb") as f, wave.open(f) as wf:
             return wf.readframes(self._wav_info['frames'])
 
+    # 再生用関数群
+    # byte列を(本来のwavのデータの情報を元に再生)
+    def play_file(self):
+        p = pyaudio.PyAudio()
+        # Streamを生成(3)
+        stream = p.open(
+            format=p.get_format_from_width(self._wav_info['width']),
+            channels=self._wav_info['channel'],
+            rate=self._wav_info['frame_rate'],
+            output=True)
+        for byte_data in self.bytes_data_generator():
+            stream.write(byte_data)
+        stream.close()
+        p.terminate()
+
+    # byte列の末端になるまで1フレーム毎にデータを出力
+    def bytes_data_generator(self):
+        frame_per_buffer = 1024
+        position = 0
+        size = len(self._data)
+        while position < size:
+            yield self._data[position:position + frame_per_buffer]
+            position += frame_per_buffer
+
     # 変換用関数群
     def normalization(self, array) -> list:
         # エフェクトをかけやすいようにバイナリデータを[-1, +1]に正規化
@@ -42,30 +65,6 @@ class WavAndArray:
         # 正規化前のバイナリデータに戻す(32768倍)
         new_data = [int(x * 32767.0) for x in array]
         return struct.pack("h" * len(new_data), *new_data)
-
-    # 再生用関数
-    # byte列を(本来のwavのデータの情報を元に再生)
-    def play_file(self):
-        p = pyaudio.PyAudio()
-        # Streamを生成(3)
-        stream = p.open(
-            format=p.get_format_from_width(self._wav_info['width']),
-            channels=self._wav_info['channel'],
-            rate=self._wav_info['frame_rate'],
-            output=True)
-        for  byte_data in self.bytes_data_generator():
-            stream.write(byte_data)
-        stream.close()
-        p.terminate()
-
-    # byte列の末端になるまで再生
-    def bytes_data_generator(self):
-        frame_per_buffer = 1024
-        position = 0
-        size = len(self._data)
-        while position < size:
-            yield self._data[position:position + frame_per_buffer]
-            position += frame_per_buffer
 
 # """保存用関数群"""
 #

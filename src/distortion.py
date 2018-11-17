@@ -4,12 +4,6 @@ from src import convert_wav_and_array as cwa
 
 class DistortionWavAndArray(cwa.WavAndArray):
     pass
-# 音割れファイルの再生
-def play_distortion_file(origin_path: Path, gain):
-    # distortion nd_array
-    new_data = distortion_array(origin_path, gain)
-    # 音声を保存
-    cwa.play_file(new_data, origin_path)
 
 
 # origin_path の　wavに対して, distortion した　arrayを返す
