@@ -22,6 +22,9 @@ class DistortionWavAndArray(cwa.WavAndArray):
             position += frame_per_buffer
 
     def update(self, distortion_level=20):
+        """今回の肝
+        このクラスのself._dist_levelを変更したらリアルタイムで音割れ度が変わる
+        """
         self._dist_level = distortion_level
 
 
