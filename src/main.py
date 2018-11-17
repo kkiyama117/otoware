@@ -1,3 +1,4 @@
+from src.convert_wav_and_array import WavAndArray
 from src.distortion import create_distortion_file, play_distortion_file
 from src.utils import get_data_file_path
 import argparse
@@ -22,7 +23,9 @@ def play_otowari(file_name, distortion_level=20):
     # result_path = get_data_file_path(result_file)
     # create_distortion_file(origin_path, result_path,
     #                        gain=distortion_level * 1.3)
-    play_distortion_file(origin_path, gain=int(distortion_level * 1.3))
+    # play_distortion_file(origin_path, gain=int(distortion_level * 1.3))
+    wav_file=WavAndArray(origin_path)
+    wav_file.play_file()
 
 
 if __name__ == '__main__':

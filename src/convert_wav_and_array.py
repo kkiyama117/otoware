@@ -16,14 +16,6 @@ class WavAndArray:
         self._data = self.wav_to_ndarray()
         print(self._wav_info)
 
-    # byte列を(本来のwavのデータの情報を元に再生)
-    def play_file(self):
-        channel = self._wav_info['channel']
-        width = self._wav_info['width']
-        frame_rate = self._wav_info['frame_rate']
-        # numpyのndarrayをデバイスのデフォルトの再生機器に送信
-        self.ndarray_to_device(self._data, channel, width, frame_rate)
-
     # 初期化関数群
 
     def get_wave_info(self):
@@ -37,8 +29,7 @@ class WavAndArray:
 
     def wav_to_ndarray(self):
         with self._path.open("rb") as f, wave.open(f) as wf:
-            length = self._wav_info['frames']
-            return wf.readframes(length)
+            return wf.readframes(self._wav_info['frames'])
 
     # 変換用関数群
     def normalization(self, array) -> list:
@@ -53,19 +44,22 @@ class WavAndArray:
         return struct.pack("h" * len(new_data), *new_data)
 
     # 再生用関数
-    def ndarray_to_device(self, data: bytes, channel: int, width, rate):
+    # byte列を(本来のwavのデータの情報を元に再生)
+    def play_file(self):
         p = pyaudio.PyAudio()
         # Streamを生成(3)
-        stream = p.open(format=p.get_format_from_width(width),
-                        channels=channel,
-                        rate=rate,
-                        output=True)
-        size = len(data)
+        stream = p.open(
+            format=p.get_format_from_width(self._wav_info['width']),
+            channels=self._wav_info['channel'],
+            rate=self._wav_info['frame_rate'],
+            output=True)
+        # 
+        size = len(self._data)
         pos = 0  # byte count
         while pos < size:
             # frame_size
             frame_size = 1024
-            o = data[pos:pos + frame_size]
+            o = self._data[pos:pos + frame_size]
             stream.write(o)
             pos += frame_size
         # time.sleep(float(size) / 2 / rate)

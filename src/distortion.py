@@ -2,7 +2,8 @@ from pathlib import Path
 import numpy as np
 from src import convert_wav_and_array as cwa
 
-
+class DistortionWavAndArray(cwa.WavAndArray):
+    pass
 # 音割れファイルの再生
 def play_distortion_file(origin_path: Path, gain):
     # distortion nd_array
