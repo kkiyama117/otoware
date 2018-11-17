@@ -12,7 +12,7 @@ def create_distortion_file(origin_path: Path, result_path: Path, gain):
     cwa.save_file(new_data, origin_path, result_path)
 
 
-# 音割れファイルの再生再生
+# 音割れファイルの再生
 def play_distortion_file(origin_path: Path, gain):
     # distortion nd_array
     new_data = distortion_array(origin_path, gain)
