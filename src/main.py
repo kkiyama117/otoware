@@ -3,8 +3,6 @@ from src.utils import get_data_file_path
 import argparse
 
 
-
-
 def main():
     # arg parse する
     parser = argparse.ArgumentParser(description='Process some integers.')
@@ -13,12 +11,12 @@ def main():
     # 取得した引数
     args = parser.parse_args()
     otowari_level = args.otowari_level
-    print(otowari_level)
+    print("input:", otowari_level)
     origin_file = "origin.wav"
-    otowari(origin_file, otowari_level)
+    play_otowari(origin_file, otowari_level)
 
 
-def otowari(file_name, distortion_level=20):
+def play_otowari(file_name, distortion_level=20):
     origin_path = get_data_file_path(file_name)
     result_file = "dist_" + origin_path.name
     result_path = get_data_file_path(result_file)
