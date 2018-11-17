@@ -1,5 +1,4 @@
 import struct
-import time
 import wave
 import pyaudio
 from pathlib import Path
@@ -65,7 +64,7 @@ def play_file(new_data, origin_path):
     width = wav_info['width']
     frame_rate = wav_info['frame_rate']
     # numpyのndarrayをデバイスのデフォルトの再生機器に送信
-    cwa.ndarray_to_device(new_data, channel, width, frame_rate)
+    ndarray_to_device(new_data, channel, width, frame_rate)
 
 
 """保存用関数群"""
