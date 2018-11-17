@@ -1,11 +1,21 @@
 from src.distortion import create_distortion_file
 from src.utils import get_data_file_path
+import argparse
+
+
 
 
 def main():
     # arg parse する
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument("otowari_level", help="input number",
+                        type=int)
+    # 取得した引数
+    args = parser.parse_args()
+    otowari_level = args.otowari_level
+    print(otowari_level)
     origin_file = "origin.wav"
-    otowari(origin_file)
+    otowari(origin_file, otowari_level)
 
 
 def otowari(file_name, distortion_level=20):
