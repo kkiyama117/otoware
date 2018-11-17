@@ -40,7 +40,8 @@ def save_file(bit_array, origin_path: Path, result_path: Path):
     wav_info = cwa.get_wave_info(origin_path)
     frame_rate = wav_info['frame_rate']
     channel = wav_info['channel']
-    cwa.ndarray_to_wav(bit_array, channel, frame_rate, result_path)
+    cwa.ndarray_to_wav(bit_array, channel=channel, rate=frame_rate,
+                       path=result_path)
 
 
 def distortion(data, gain, level=0.7, clip=True):
