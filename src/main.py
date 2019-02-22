@@ -8,6 +8,7 @@ def main():
     # 取得した引数
     otowari_level = 1024
     origin_file = "origin.wav"
+    # 多分これと別にThreadを立ててotowari_levelを更新させればいい
     play_otowari(origin_file, otowari_level)
 
 
