@@ -1,13 +1,19 @@
+import argparse
+
 from otoware.distortion import DistortionWavAndArray
 from otoware.utils import get_data_file_path
 
 
 def main():
-    # 取得した引数
-    otowari_level = 1024
-    origin_file = "origin.wav"
+    parser = argparse.ArgumentParser(description='このプログラムの説明（なくてもよい）')  # 2. パーサを作る
+
+    # 3. parser.add_argumentで受け取る引数を追加していく
+    parser.add_argument('filename', help='wav file name')  # 必須の引数を追加
+    parser.add_argument('-d', '--dist_level', help='distortion level', default=1024)
+
+    args = parser.parse_args()
     # 多分これと別にThreadを立ててotowari_levelを更新させればいい
-    play_otowari(origin_file, otowari_level)
+    play_otowari(args.filename, args.dist_level)
 
 
 def play_otowari(file_name, distortion_level=20):

@@ -9,9 +9,16 @@ def get_data_file_path(file_name):
     if file_path.is_absolute():
         return file_path.resolve()
     else:
-        data_dir_path = Path(__file__).parents[1] / "data"
-        file_path = data_dir_path / file_name
-        return file_path.resolve()
+        data_dir_path: Path = Path(__file__).parent.parent / "data"
+        file_path = (data_dir_path / file_name).resolve()
+        if file_path.exists():
+            return file_path
+        file_path = Path(__file__).parents[1] / file_name
+        if file_path.exists():
+            return file_path
+        else:
+            print(file_path)
+            raise OSError("path not exist")
 
 
 # 変換用関数群
