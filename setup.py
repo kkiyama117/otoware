@@ -24,7 +24,7 @@ setup(name='otoware',
       classifiers=[
           "Programming Language :: Python",
       ],
-      author='maskuerade',
+      author='kkiyama117',
       author_email='k.kiyama117@gmail.com',
       url='https://ku-jinja.net',
       keywords='python',
@@ -37,7 +37,7 @@ setup(name='otoware',
       install_requires=requires,
       entry_points={
           'console_scripts': [
-              'otowari = otoware.main:main',
+              'otowari = otoware.api:main',
           ],
       },
       )
