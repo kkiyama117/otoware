@@ -18,7 +18,7 @@ tests_require = [
 ]
 
 setup(name='otoware',
-      version='0.0.2',
+      version='1.0.0',
       description='otoware',
       long_description=README,
       classifiers=[
