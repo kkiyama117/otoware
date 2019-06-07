@@ -8,7 +8,8 @@ with open(os.path.join(here, 'README.md')) as f:
 
 requires = [
     'numpy',
-    'matplotlib'
+    'matplotlib',
+    'pyaudio'
 ]
 
 tests_require = [
