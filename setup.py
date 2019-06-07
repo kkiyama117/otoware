@@ -18,7 +18,7 @@ tests_require = [
 ]
 
 setup(name='otoware',
-      version='0.0.1',
+      version='0.0.2',
       description='otoware',
       long_description=README,
       classifiers=[
@@ -37,7 +37,7 @@ setup(name='otoware',
       install_requires=requires,
       entry_points={
           'console_scripts': [
-              'otowari = src.main:main',
+              'otowari = otoware.main:main',
           ],
       },
       )

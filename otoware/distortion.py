@@ -1,6 +1,6 @@
 from pathlib import Path
 import numpy as np
-from src import convert_wav_and_array as cwa, utils
+from otoware import convert_wav_and_array as cwa, utils
 
 
 class DistortionWavAndArray(cwa.WavAndArray):

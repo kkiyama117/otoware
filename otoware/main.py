@@ -1,5 +1,5 @@
-from src.distortion import DistortionWavAndArray
-from src.utils import get_data_file_path
+from otoware.distortion import DistortionWavAndArray
+from otoware.utils import get_data_file_path
 
 
 def main():
