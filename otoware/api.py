@@ -8,7 +8,7 @@ def main():
     parser = argparse.ArgumentParser(description='このプログラムの説明（なくてもよい）')  # 2. パーサを作る
 
     # 3. parser.add_argumentで受け取る引数を追加していく
-    parser.add_argument('-d', '--dist_level', help='distortion level', default=1024)
+    parser.add_argument('-d', '--dist_level', help='distortion level', type=int, default=1024)
     parser.add_argument('-f', '--file_name', help='wav file name', default="origin.wav")
 
     args = parser.parse_args()
