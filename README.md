@@ -24,4 +24,4 @@ otoware 手伝い
 data/origin.wav がdist_origin.wav になります
 
 ## TODO
-ファイル名と音割れの度合いの変数を外部から与えられるようにする
+リアルタイムでの音割れ
