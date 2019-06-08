@@ -8,12 +8,12 @@ def main():
     parser = argparse.ArgumentParser(description='このプログラムの説明（なくてもよい）')  # 2. パーサを作る
 
     # 3. parser.add_argumentで受け取る引数を追加していく
-    parser.add_argument('filename', help='wav file name')  # 必須の引数を追加
     parser.add_argument('-d', '--dist_level', help='distortion level', default=1024)
+    parser.add_argument('-f', '--file_name', help='wav file name', default="origin.wav")
 
     args = parser.parse_args()
     # 多分これと別にThreadを立ててotowari_levelを更新させればいい
-    play_otowari(args.filename, args.dist_level)
+    play_otowari(args.file_name, args.dist_level)
 
 
 def play_otowari(file_name, distortion_level=20):

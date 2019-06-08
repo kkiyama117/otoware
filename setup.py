@@ -18,9 +18,10 @@ tests_require = [
 ]
 
 setup(name='otoware',
-      version='1.0.0',
+      version='1.0.3',
       description='otoware',
       long_description=README,
+      long_description_content_type="text/markdown",
       classifiers=[
           "Programming Language :: Python",
       ],
@@ -31,10 +32,11 @@ setup(name='otoware',
       packages=find_packages(),
       include_package_data=True,
       zip_safe=False,
+      install_requires=requires,
       extras_require={
           'testing': tests_require,
       },
-      install_requires=requires,
+      data_files=[('data', ['data/origin.wav'])],
       entry_points={
           'console_scripts': [
               'otowari = otoware.api:main',
