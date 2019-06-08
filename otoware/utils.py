@@ -1,24 +1,27 @@
-from pathlib import Path
+import sys
+import pathlib
 import struct
 
 from numpy.ma import frombuffer
 
 
 def get_data_file_path(file_name):
-    file_path = Path(file_name)
+    file_path = pathlib.Path(file_name)
     if file_path.is_absolute():
         return file_path.resolve()
     else:
-        data_dir_path: Path = Path.cwd() / "data"
-        file_path = (data_dir_path / file_name).resolve()
-        if file_path.exists():
-            return file_path.resolve()
-        file_path = Path.cwd() / file_name
-        if file_path.exists():
-            return file_path.resolve()
+        # 相対PATHだった時.
+        # venv etc.
+        for data_dir_path in sys.path:
+            file_path_venv = (pathlib.Path(data_dir_path) / 'otoware' / file_name).resolve()
+            if file_path_venv.exists():
+                return file_path_venv.resolve()
+        file_path_dev = pathlib.Path.cwd() / "data" / file_name
+        if file_path_dev.exists():
+            return file_path_dev.resolve()
         else:
             print(file_path)
-            raise OSError("path not exist")
+            raise OSError("wav file path not exist")
 
 
 # 変換用関数群

@@ -18,7 +18,7 @@ tests_require = [
 ]
 
 setup(name='otoware',
-      version='1.0.4',
+      version='1.0.6',
       description='otoware',
       long_description=README,
       long_description_content_type="text/markdown",
@@ -36,7 +36,6 @@ setup(name='otoware',
       extras_require={
           'testing': tests_require,
       },
-      data_files=[('data', ['data/origin.wav'])],
       entry_points={
           'console_scripts': [
               'otowari = otoware.api:main',
