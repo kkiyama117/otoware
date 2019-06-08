@@ -18,7 +18,7 @@ tests_require = [
 ]
 
 setup(name='otoware',
-      version='1.0.3',
+      version='1.0.4',
       description='otoware',
       long_description=README,
       long_description_content_type="text/markdown",
