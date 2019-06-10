@@ -1,6 +1,6 @@
 import argparse
 
-from otoware.distortion import DistortionWavAndArray
+import distortion.distortion as distort
 from otoware.utils import get_data_file_path
 
 
@@ -19,8 +19,16 @@ def main():
 def play_otowari(file_name, distortion_level=20):
     origin_path = get_data_file_path(file_name)
     # wav_file=WavAndArray(origin_path)
-    wav_file = DistortionWavAndArray(origin_path,
-                                     distortion_level=distortion_level)
+    wav_file = distort.DistortionWavAndArray(origin_path,
+                                             distortion_level=distortion_level)
+    wav_file.play_file()
+
+
+def save_otowari(file_name, distortion_level=20):
+    origin_path = get_data_file_path(file_name)
+    # wav_file=WavAndArray(origin_path)
+    wav_file = distort.DistortionWavAndArray(origin_path,
+                                             distortion_level=distortion_level)
     wav_file.play_file()
 
 
